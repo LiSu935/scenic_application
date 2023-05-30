@@ -1,6 +1,7 @@
 library(Seurat)
 library(SeuratDisk)
 
+# this is for output the SCT data matrix since it contain all genes after filtering, aka more than variable genes.
 c1 = readRDS("c1_integrated.RDS")
 DefaultAssay(object = c1) <- "SCT"
 c1_1 = c1
@@ -10,6 +11,10 @@ c1_1 = DietSeurat(c1_1, assays = "SCT",  scale.data = FALSE, dimreducs = c("umap
 SaveH5Seurat(c1_1, filename = "c1_slim.h5Seurat",overwrite = TRUE)
 Convert("c1_slim.h5Seurat", dest = "h5ad", overwrite = TRUE)
 
+# For the SCENIC step four, the integrated scale.data is also needed. So, need to output it as well.
+DefaultAssay(object = c1) <- "integrated"
+SaveH5Seurat(c1, filename = "c1_integrated.h5Seurat")
+Convert("c1_integrated.h5Seurat", dest = "h5ad")
 
 # set variables for file paths to read from and write to:
 
