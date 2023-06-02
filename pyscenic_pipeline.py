@@ -7,6 +7,15 @@ import loompy as lp
 from MulticoreTSNE import MulticoreTSNE as TSNE
 import seaborn as sns
 import matplotlib.pyplot as plt
+import argparse
+
+parser = argparse.ArgumentParser(description='pyscenic pipeline')
+parser.add_argument('--prefix', type=str, default='SULI', help='prefix: prefix for the output files')
+parser.add_argument('--path_ad_file_from_seurat', type=str, default="/storage/htc/joshilab/Su_Li/Spencerlab/data/c1_slim.h5ad", help='SCT mtx from seurat containing all features')
+
+args = parser.parse_args()
+
+print(args)
 
 
 # set variables for file paths to read from and write to:
@@ -16,7 +25,7 @@ wdir = "/storage/htc/joshilab/Su_Li/Spencerlab/scenic_application/"
 os.chdir( wdir )
 
 # here to set a prefix for ease
-prefix = "c1"
+prefix = args.prefix
 
 # =====No need if already QC by Seurat================================================= #
 # ===================================================================================== #
@@ -24,8 +33,8 @@ prefix = "c1"
 #f_loom_path_unfilt = "pbmc10k_unfiltered.loom" # test dataset, n=500 cells
 # ===================================================================================== #
 
-# path to loop file that has been QC and clustering by Seurat:
-f_anndata_path_input = "/storage/htc/joshilab/Su_Li/Spencerlab/data/c1_slim.h5ad"
+# path to anndata file that has been QC and clustering by Seurat:
+f_anndata_path_input = args.path_ad_file_from_seurat
 
 # path to unfiltered loom file (this will be created in the optional steps below)
 f_loom_path_unfilt = prefix+"_unfiltered.loom"
