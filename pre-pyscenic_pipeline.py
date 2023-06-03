@@ -9,20 +9,23 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import argparse
 
-parser = argparse.ArgumentParser(description='pyscenic pipeline')
+parser = argparse.ArgumentParser(description='pre-pyscenic pipeline, generating loom file for scenic step1')
 parser.add_argument('--prefix', type=str, default='SULI', help='prefix: prefix for the output files')
 parser.add_argument('--path_ad_file_from_seurat', type=str, default="/storage/htc/joshilab/Su_Li/Spencerlab/data/c1_slim.h5ad", help='SCT mtx from seurat containing all features')
+parser.add_argument('--wdir', type=str, default="/storage/htc/joshilab/Su_Li/Spencerlab/scenic_application/", help='working dir of the scenic, major dir.')
 
 args = parser.parse_args()
-
 print(args)
-
 
 # set variables for file paths to read from and write to:
 
 # set a working directory
-wdir = "/storage/htc/joshilab/Su_Li/Spencerlab/scenic_application/"
+wdir = args.wdir
 os.chdir( wdir )
+output_dir = "results/"+prefix+"/"
+
+if not os.path.exists('output_dir'):
+   os.makedirs('output_dir')
 
 # here to set a prefix for ease
 prefix = args.prefix
@@ -37,19 +40,19 @@ prefix = args.prefix
 f_anndata_path_input = args.path_ad_file_from_seurat
 
 # path to unfiltered loom file (this will be created in the optional steps below)
-f_loom_path_unfilt = prefix+"_unfiltered.loom"
+f_loom_path_unfilt = output_dir+prefix+"_unfiltered.loom"
 
 # # path to loom file with basic filtering applied (this will be created in the "initial filtering" step below). Optional.
-f_loom_path_scenic = prefix+"_integrated.loom"
+f_loom_path_scenic = output_dir+prefix+"_integrated.loom"
 
 # path to anndata object, which will be updated to store Scanpy results as they are generated below
-f_anndata_path = prefix+"_anndata.h5ad"
+f_anndata_path = output_dir+prefix+"_anndata.h5ad"
 
 # path to pyscenic output
-f_pyscenic_output = prefix+"_pyscenic_output.loom"
+f_pyscenic_output = output_dir+prefix+"_pyscenic_output.loom"
 
 # loom output, generated from a combination of Scanpy and pySCENIC results:
-f_final_loom = prefix+'_scenic_integrated-output.loom'
+f_final_loom = output_dir+prefix+'_scenic_integrated-output.loom'
 
 sc.settings.verbosity = 3 # verbosity: errors (0), warnings (1), info (2), hints (3)
 sc.logging.print_versions()
