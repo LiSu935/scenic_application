@@ -100,12 +100,12 @@ print("minSamples: ", minSamples)
 # simply compute the number of genes per cell (computers 'n_genes' column)
 #sc.pp.filter_cells(adata, min_genes=0)
 # mito and genes/counts cuts
-mito_genes = adata.var_names.str.startswith('Mt-')
+mito_genes = adata.var_names.str.startswith('MT-')
 # for each cell compute fraction of counts in mito genes vs. all genes
-adata.obs['percent_mito'] = np.sum(
-    np.matrix(adata[:, mito_genes].X), axis=1).A1 / np.sum(np.matrix(adata.X), axis=1).A1
+adata.obs['percent_mito'] = np.sum(adata[:, mito_genes].X, axis=1).A1 / np.sum(adata.X, axis=1).A1
+
 # add the total counts per cell as observations-annotation to adata
-adata.obs['n_counts'] = np.matrix(adata.X).sum(axis=1).A1
+adata.obs['n_counts'] = adata.X.sum(axis=1).A1
 
 adata.obs["n_genes"]= np.array( np.sum(adata.X.transpose()>0 , axis=0)).flatten()
 
