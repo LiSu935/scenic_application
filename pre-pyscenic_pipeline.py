@@ -22,13 +22,15 @@ print(args)
 # set a working directory
 wdir = args.wdir
 os.chdir( wdir )
+
+# here to set a prefix for ease
+prefix = args.prefix
+
 output_dir = "results/"+prefix+"/"
 
 if not os.path.exists('output_dir'):
    os.makedirs('output_dir')
 
-# here to set a prefix for ease
-prefix = args.prefix
 
 # =====No need if already QC by Seurat================================================= #
 # ===================================================================================== #
