@@ -207,7 +207,6 @@ plt.rcParams.update({
         'ytick.labelsize':'medium'
         })
 plt.savefig(prefix+"_cluster-RSS-top5.tiff", dpi=150, bbox_inches = "tight")
-plt.show()
 
 # Select the top 5 regulons from each cell type
 topreg = []
@@ -216,6 +215,15 @@ for i,c in enumerate(cats):
         list(rss_louvain.T[c].sort_values(ascending=False)[:5].index)
     )
 topreg = list(set(topreg))
+
+topreg_o = []
+for i,c in enumerate(cats):
+    topreg_o.extend(
+        list(rss_louvain.T[c].sort_values(ascending=False)[:5].index)
+    )
+
+print("This is the original topreg_o list:")
+print(topreg_o) 
 
 # Generate a Z-score for each regulon to enable comparison between regulons
 auc_mtx_Z = pd.DataFrame( index=auc_mtx.index )
@@ -257,18 +265,9 @@ g.ax_heatmap.set_xlabel('')
 plt.savefig(prefix+"_cluster-heatmap-top5.tiff", dpi=600, bbox_inches = "tight")
 
 
-topreg_o = []
-for i,c in enumerate(cats):
-    topreg_o.extend(
-        list(rss_louvain.T[c].sort_values(ascending=False)[:5].index)
-    )
-
-print("This is the original topreg_o list:")
-print(topreg_o) 
-
 ### Further exploration of modules directly from the network inference output
 
-adjacencies = pd.read_csv(adj_path, index_col=False, sep='\t')
+adjacencies = pd.read_csv(adj_path, index_col=False, sep=',')
 
 from pyscenic.utils import modules_from_adjacencies
 modules = list(modules_from_adjacencies(adjacencies, exprMat))
