@@ -13,7 +13,7 @@ from pyscenic.export import add_scenic_metadata
 from pyscenic.cli.utils import load_signatures
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from scanpy.plotting._tools.scatterplots import plot_scatter
+#from scanpy.plotting._tools.scatterplots import plot_scatter
 import seaborn as sns
 
 # set a working directory
