@@ -288,6 +288,7 @@ def write_tf_module_regulon_list(tf):
             
             
 for tf in topreg:
+    tf = tf[:-4]
     write_tf_module_regulon_list(tf)
     
             
