@@ -23,8 +23,9 @@ os.chdir( wdir )
 
 # here to set a prefix for ease
 prefix = args.prefix
-output_dir = wdir+"results/"+prefix+"/"
+output_dir = "results/"+prefix+"/"
 sc.settings.figdir = output_dir
+os.mkdir(output_dir+"umap/")
 
 # =====No need if already QC by Seurat================================================= #
 # ===================================================================================== #
@@ -54,7 +55,7 @@ adata = sc.read_h5ad( f_anndata_path )
 
 adata.obs['seurat_clusters'] = adata.obs['seurat_clusters'].astype("category")
 
-sc.pl.umap(adata, color=['seurat_clusters'], save=output_dir+prefix+'_seurat_clusters.png' )
+sc.pl.umap(adata, color=['seurat_clusters'], save=prefix+'_seurat_clusters.png' )
 
 # find marker genes
 sc.tl.rank_genes_groups(adata, 'seurat_clusters', method='t-test', use_raw=False)
