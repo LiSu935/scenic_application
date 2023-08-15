@@ -15,16 +15,26 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 #from scanpy.plotting._tools.scatterplots import plot_scatter
 import seaborn as sns
+import argparse
 
-# set a working directory
-# set variables for file paths to read from and write to:
+parser = argparse.ArgumentParser(description='pyscenic pipeline after pyscenic step4')
+parser.add_argument('--prefix', type=str, default='SULI', help='prefix: prefix for the output files')
+parser.add_argument('--path_ad_file_from_seurat_integrated', type=str, default="/storage/htc/joshilab/Su_Li/Spencerlab/data/c1_integrated.h5ad", help='SCT mtx from seurat containing all features')
+parser.add_argument('--wdir', type=str, default="/storage/htc/joshilab/Su_Li/Spencerlab/scenic_application/", help='working dir of the scenic, major dir.')
 
-# set a working directory
-wdir = "/storage/htc/joshilab/Su_Li/StowersHSC/scenic_application/results/hsc_from_biocluster/purely_from_biocluster/"
-os.chdir( wdir )
+args = parser.parse_args()
+print(args)
 
 # here to set a prefix for ease
-prefix = "hsc"
+prefix = args.prefix
+
+# set a working directory
+
+wdir = args.wdir
+wdir = wdir+"results/"+prefix+"/"
+os.chdir( wdir )
+
+
 
 # =====No need if already QC by Seurat================================================= #
 # ===================================================================================== #
@@ -43,7 +53,7 @@ f_loom_path_scenic = "hsc_integrated.loom"
 
 # path to anndata object, which will be updated to store Scanpy results as they are generated below
 # replaced with h5ad file converted from Seurat:
-f_anndata_path = "/storage/htc/joshilab/Su_Li/StowersHSC/scenic_application/seurat_scenicInput/hsc_integrated.h5ad"
+f_anndata_path = args.path_ad_file_from_seurat_integrated
 
 # path to pyscenic output
 f_pyscenic_output = prefix+"_pyscenic_output.loom"
@@ -51,8 +61,8 @@ f_pyscenic_output = prefix+"_pyscenic_output.loom"
 # loom output, generated from a combination of Scanpy and pySCENIC results:
 f_final_loom = prefix+'_scenic_integrated-output.loom'
 
-reg_path = "hscreg.csv"
-adj_path = "hscadj.csv"
+reg_path = prefix+"reg.csv"
+adj_path = prefix+"adj.csv"
 
 
 
