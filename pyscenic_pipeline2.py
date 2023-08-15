@@ -23,7 +23,7 @@ os.chdir( wdir )
 
 # here to set a prefix for ease
 prefix = args.prefix
-output_dir = "results/"+prefix+"/"
+output_dir = wdir+"results/"+prefix+"/"
 
 # =====No need if already QC by Seurat================================================= #
 # ===================================================================================== #
