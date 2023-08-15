@@ -1,3 +1,5 @@
+# General Step 1: output seurat object to h5ad format for pyscenic
+
 library(Seurat)
 library(SeuratDisk)
 
