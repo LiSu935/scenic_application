@@ -6,13 +6,23 @@ import loompy as lp
 from MulticoreTSNE import MulticoreTSNE as TSNE
 import seaborn as sns
 import matplotlib.pyplot as plt
+import argparse
+
+parser = argparse.ArgumentParser(description='pyscenic pipeline after pyscenic step4')
+parser.add_argument('--prefix', type=str, default='SULI', help='prefix: prefix for the output files')
+parser.add_argument('--path_ad_file_from_seurat_integrated', type=str, default="/storage/htc/joshilab/Su_Li/Spencerlab/data/c1_integrated.h5ad", help='SCT mtx from seurat containing all features')
+parser.add_argument('--wdir', type=str, default="/storage/htc/joshilab/Su_Li/Spencerlab/scenic_application/", help='working dir of the scenic, major dir.')
+
+args = parser.parse_args()
+print(args)
+
 
 # set a working directory
-wdir = "/storage/htc/joshilab/Su_Li/Spencerlab/scenic_application/"
+wdir = args.wdir
 os.chdir( wdir )
 
 # here to set a prefix for ease
-prefix = "c1"
+prefix = args.prefix
 output_dir = "results/"+prefix+"/"
 
 # =====No need if already QC by Seurat================================================= #
@@ -20,9 +30,6 @@ output_dir = "results/"+prefix+"/"
 # path to unfiltered loom file (this will be created in the optional steps below)
 #f_loom_path_unfilt = "pbmc10k_unfiltered.loom" # test dataset, n=500 cells
 # ===================================================================================== #
-
-# path to loop file that has been QC and clustering by Seurat:
-f_anndata_path_input = "../data/c1_slim.h5ad"
 
 # path to unfiltered loom file (this will be created in the optional steps below)
 f_loom_path_unfilt = output_dir+prefix+"_unfiltered.loom"
@@ -32,7 +39,7 @@ f_loom_path_scenic = output_dir+prefix+"_integrated.loom"
 
 # path to anndata object, which will be updated to store Scanpy results as they are generated below
 # replaced with h5ad file converted from Seurat, since it contains the scale.data and the clustering results as well
-f_anndata_path = "../data/c1_integrated.h5ad"
+f_anndata_path = args.path_ad_file_from_seurat_integrated
 
 # path to pyscenic output
 f_pyscenic_output = output_dir+prefix+"_pyscenic_output.loom"
