@@ -24,8 +24,6 @@ os.chdir( wdir )
 # here to set a prefix for ease
 prefix = args.prefix
 output_dir = "results/"+prefix+"/"
-sc.settings.figdir = output_dir
-os.mkdir(output_dir+"umap/")
 
 # =====No need if already QC by Seurat================================================= #
 # ===================================================================================== #
@@ -58,12 +56,12 @@ adata.obs['seurat_clusters'] = adata.obs['seurat_clusters'].astype("category")
 sc.pl.umap(adata, color=['seurat_clusters'], save=prefix+'_seurat_clusters.png' )
 
 # find marker genes
-sc.tl.rank_genes_groups(adata, 'seurat_clusters', method='t-test', use_raw=False)
-sc.pl.rank_genes_groups(adata, n_genes=25, sharey=False)
+#sc.tl.rank_genes_groups(adata, 'seurat_clusters', method='t-test', use_raw=False)
+#sc.pl.rank_genes_groups(adata, n_genes=25, sharey=False)
 
 # sc.tl.rank_genes_groups(adata, 'louvain', method='logreg')
 # sc.pl.rank_genes_groups(adata, n_genes=25, sharey=False)
-pd.DataFrame(adata.uns['rank_genes_groups']['names']).head(10)
+#pd.DataFrame(adata.uns['rank_genes_groups']['names']).head(10)
 
 # tSNE
 tsne = TSNE( n_jobs=20 )
