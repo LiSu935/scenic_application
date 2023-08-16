@@ -66,7 +66,7 @@ sc.pl.umap(adata, color=['seurat_clusters'], save=prefix+'_seurat_clusters.png' 
 # tSNE
 tsne = TSNE( n_jobs=20 )
 adata.obsm['X_tsne'] = tsne.fit_transform( adata.X )
-adata.write( f_anndata_path )
+#adata.write( f_anndata_path )
 
 nGenesDetectedPerCellbefore = np.sum(adata.X>0, axis=1)
 nGenesDetectedPerCell = pd.Series(nGenesDetectedPerCellbefore)
