@@ -55,6 +55,10 @@ adata.obs['seurat_clusters'] = adata.obs['seurat_clusters'].astype("category")
 
 sc.pl.umap(adata, color=['seurat_clusters'], save=prefix+'_seurat_clusters.png' )
 
+mito_genes = adata.var_names.str.startswith('Mt-')
+# for each cell compute fraction of counts in mito genes vs. all genes
+adata.obs['percent_mito'] = np.sum(adata[:, mito_genes].X, axis=1) / np.sum(adata.X, axis=1)
+
 # find marker genes
 #sc.tl.rank_genes_groups(adata, 'seurat_clusters', method='t-test', use_raw=False)
 #sc.pl.rank_genes_groups(adata, n_genes=25, sharey=False)
