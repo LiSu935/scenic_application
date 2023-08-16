@@ -34,6 +34,8 @@ wdir = args.wdir
 wdir = wdir+"results/"+prefix+"/"
 os.chdir( wdir )
 
+if not os.path.exists('top5_regulator_module_regulon_list'):
+   os.makedirs('top5_regulator_module_regulon_list')
 
 
 # =====No need if already QC by Seurat================================================= #
