@@ -231,11 +231,21 @@ topreg = list(set(topreg))
 topreg_o = []
 for i,c in enumerate(cats):
     topreg_o.extend(
-        list(rss_louvain.T[c].sort_values(ascending=False)[:5].index)
+        list(rss_louvain.T[c].sort_values(ascending=False)[:20].index)
     )
 
 print("This is the original topreg_o list:")
 print(topreg_o) 
+
+rows = [topreg_o[i:i+20] for i in range(0, len(topreg_o), 20)]
+
+# Create the output content
+output_content = '\n'.join([f'Cluster {index}, {", ".join(row)}' for index, row in enumerate(rows)])
+
+# Write the output content to the new file
+output_filename = "top20_regulons_perCluster.csv"
+with open(output_filename, 'w') as f:
+    f.write(output_content)
 
 # Generate a Z-score for each regulon to enable comparison between regulons
 auc_mtx_Z = pd.DataFrame( index=auc_mtx.index )
@@ -302,5 +312,10 @@ def write_tf_module_regulon_list(tf):
 for tf in topreg:
     tf = tf[:-4]
     write_tf_module_regulon_list(tf)
+
+for tf in list(set(topreg_o)):
+    tf = tf[:-4]
+    write_tf_module_regulon_list(tf)
+   
     
             
